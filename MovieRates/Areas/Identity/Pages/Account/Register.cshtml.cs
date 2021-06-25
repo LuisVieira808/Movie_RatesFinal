@@ -13,6 +13,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
+using MovieRates.Models;
 
 namespace MovieRates.Areas.Identity.Pages.Account
 {
@@ -60,6 +61,9 @@ namespace MovieRates.Areas.Identity.Pages.Account
             [Display(Name = "Confirm password")]
             [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
             public string ConfirmPassword { get; set; }
+
+
+            public Utilizadores Utilizador { get; set; }
         }
 
         public async Task OnGetAsync(string returnUrl = null)
