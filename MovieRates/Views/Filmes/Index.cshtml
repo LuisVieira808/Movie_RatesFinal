@@ -1,0 +1,23 @@
+﻿@model IEnumerable<MovieRates.Models.Filmes>
+
+@{ 
+    ViewData["Title"] = "Index"; 
+    
+}
+<head>
+    <link rel="stylesheet" href="~/css/ImagensFilmes.css" />
+</head>
+<h1>Lista de Filmes</h1>
+@foreach (var item in Model) {
+ //   
+<div class="Filme">
+    <a asp-action="Details" asp-route-id="@item.IdFilmes">
+        <img class="FotoFilme" src="~/fotos/@Html.DisplayFor(modelItem => item.Capa)" />
+        <div class="overlay">
+            <div class="text">
+                @Html.DisplayFor(modelItem => item.Titulo)
+            </div>
+        </div>
+    </a>
+</div>
+ }

@@ -1,0 +1,57 @@
+﻿@model MovieRates.Models.Filmes
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Detalhes</h1>
+
+<div>
+    <hr />
+    <div style="float:left; margin-right:20px;  margin-top:10px; border:4px solid black">
+        <img src="~/fotos/@Html.DisplayFor(model => model.Capa)"
+             width="200" />
+    </div>
+    <div style="line-height:2;  ">
+        <b> Titulo:</b>
+        @Html.DisplayFor(model => model.Titulo) <br />
+
+        <b> Data de Lançamento: </b>
+        @Html.DisplayFor(model => model.Data)<br />
+
+        <b> Realizador:</b>
+        @Html.DisplayFor(model => model.Realizador)<br />
+
+        <b> Elenco:</b>
+        @Html.DisplayFor(model => model.Elenco)<br />
+
+        <a style="font-weight: bold" href="@Html.DisplayFor(model => model.Link)"><b>Visualização do Site</b></a><br />
+
+        <b> Duração:</b>
+        @Html.DisplayFor(model => model.Duracao)<br />
+
+        <b> Pontuação:</b>
+        @Html.DisplayFor(model => model.Pontuacao)<br />
+
+        <b> Sinopse:</b>
+        @Html.DisplayFor(model => model.Descricao)<br /> <br />
+
+    </div>
+
+    @if (User.Identity.IsAuthenticated) {
+
+    <form asp-action="CreateComentario">
+        <input type="hidden" name="IdFilmes" value="@Model.IdFilmes" />
+        <span>Rating: </span><input required type="number" name="rating" min="1" max="10" maxlength="2" placeholder="1" /><br />
+        <span>Comentario:</span>
+        <textarea required name="comentario" style="resize:none; width:1000px; height:100px;"></textarea><br />
+        <input type="submit" value="Adicionar Comentrario" class="btn btn-primary" />
+    </form>
+    }
+
+</div>
+
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.IdFilmes">Editar</a> |
+    <a asp-action="Index">Voltar</a>
+</div>
