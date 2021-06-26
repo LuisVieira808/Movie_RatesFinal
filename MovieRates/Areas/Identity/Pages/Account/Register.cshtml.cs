@@ -84,13 +84,11 @@ namespace MovieRates.Areas.Identity.Pages.Account {
             if (ModelState.IsValid) {
                 var user = new IdentityUser {
                     UserName = Input.Email,
-                    Email = Input.Email,
+                    Email = Input.Email
                     //EmailConfirmed = true,
                     //EmailConfirmed = false // o email não está formalmente confirmado
                     //LockoutEnabled = true,  // o utilizador pode ser bloqueado
-                    LockoutEnd = new DateTime(DateTime.Now.Year + 10,
-                                          DateTime.Now.Month,
-                                          DateTime.Now.Day)
+                    
                     //DataRegisto = DateTime.Now // data do registo
                 };
                 var result = await _userManager.CreateAsync(user, Input.Password);
