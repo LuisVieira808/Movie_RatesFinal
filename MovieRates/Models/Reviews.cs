@@ -33,6 +33,8 @@ namespace MovieRates.Models
         /// </summary>
         public DateTime Data { get; set; }
 
+
+
         //********************************************
         /// <summary>
         /// FK para o utilizador da review
