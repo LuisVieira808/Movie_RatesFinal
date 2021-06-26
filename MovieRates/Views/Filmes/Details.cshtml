@@ -38,6 +38,14 @@
 
     </div>
 
+    @foreach (var item in Model.ListaDeFilmes) {
+        @item.Pontuacao
+        @item.Comentario
+        @item.Utilizador.Email
+
+     }
+
+
     @if (User.Identity.IsAuthenticated) {
 
     <form asp-action="CreateComentario">

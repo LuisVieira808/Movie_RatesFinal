@@ -11,6 +11,7 @@ using Microsoft.EntityFrameworkCore;
 using MovieRates.Data;
 using MovieRates.Models;
 
+
 namespace MovieRates.Controllers
 {
 
@@ -51,14 +52,18 @@ namespace MovieRates.Controllers
                 return NotFound();
             }
 
-            var filmes = await _context.Filmes
-                .FirstOrDefaultAsync(f => f.IdFilmes == id);
-            if (filmes == null)
+            var filme = await _context.Filmes
+                .Where(f => f.IdFilmes == id)
+                .Include(f => f.ListaDeFilmes)
+                .ThenInclude(r => r.Utilizador)
+                .OrderByDescending(f => f.Data)
+                .FirstOrDefaultAsync();
+            if (filme == null)
             {
                 return NotFound();
             }
 
-            return View(filmes);
+            return View(filme);
         }
 
 
@@ -74,13 +79,13 @@ namespace MovieRates.Controllers
 
             var comment = new Reviews {
                 FilmesFK = IdFilmes,
-                Comentario = comentario,
+                Comentario = comentario.Replace("\r\n", "<br />"),
                 Pontuacao = rating,
                 Data = DateTime.Now,
                 Utilizador = utilizador
             };
 
-                _context.Add(comment);
+                _context.Reviews.Add(comment);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Details),new { id = IdFilmes});
         }

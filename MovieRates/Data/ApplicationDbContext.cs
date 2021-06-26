@@ -23,6 +23,12 @@ namespace MovieRates.Data
         {
             base.OnModelCreating(modelBuilder);
 
+            modelBuilder.Entity<IdentityRole>().HasData(
+            new IdentityRole { Id = "c", Name = "Cliente", NormalizedName = "CLIENTE" },
+            new IdentityRole { Id = "g", Name = "Gestor", NormalizedName = "GESTOR" }
+         );
+
+
             // insert DB seed
 
             modelBuilder.Entity<Filmes>().HasData(

@@ -16,16 +16,14 @@ using Microsoft.Extensions.Logging;
 using MovieRates.Data;
 using MovieRates.Models;
 
-namespace MovieRates.Areas.Identity.Pages.Account
-{
+namespace MovieRates.Areas.Identity.Pages.Account {
     [AllowAnonymous]
-    public class RegisterModel : PageModel
-    {
+    public class RegisterModel : PageModel {
         //private readonly SignInManager<IdentityUser> _signInManager;
         private readonly UserManager<IdentityUser> _userManager;
         private readonly ILogger<RegisterModel> _logger;
         //private readonly IEmailSender _emailSender;
-        
+
         /// <summary>
         /// referência à BD do nosso sistema
         /// </summary>
@@ -33,11 +31,10 @@ namespace MovieRates.Areas.Identity.Pages.Account
 
         public RegisterModel(
             UserManager<IdentityUser> userManager,
-           // SignInManager<IdentityUser> signInManager,
+            // SignInManager<IdentityUser> signInManager,
             ILogger<RegisterModel> logger,
             //IEmailSender emailSender,
-            ApplicationDbContext context)
-        {
+            ApplicationDbContext context) {
             _userManager = userManager;
             //_signInManager = signInManager;
             _logger = logger;
@@ -52,8 +49,7 @@ namespace MovieRates.Areas.Identity.Pages.Account
 
         //public IList<AuthenticationScheme> ExternalLogins { get; set; }
 
-        public class InputModel
-        {
+        public class InputModel {
             [Required]
             [EmailAddress]
             [Display(Name = "Email")]
@@ -70,25 +66,22 @@ namespace MovieRates.Areas.Identity.Pages.Account
             [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
             public string ConfirmPassword { get; set; }
 
-            public Utilizadores Utilizador { get; set; }
+            //public Utilizadores Utilizador { get; set; }
         }
 
         /// <summary>
         /// Metodo a ser executado pela pagina, quando o HTTP é invocado em GET
         /// </summary>
         /// <param name="returnUrl"></param>
-        public void OnGet(string returnUrl = null)
-        {
+        public void OnGet(string returnUrl = null) {
             ReturnUrl = returnUrl;
             //ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
         }
 
-        public async Task<IActionResult> OnPostAsync(string returnUrl = null)
-        {
+        public async Task<IActionResult> OnPostAsync(string returnUrl = null) {
             returnUrl ??= Url.Content("~/");
             //ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
-            if (ModelState.IsValid)
-            {
+            if (ModelState.IsValid) {
                 var user = new IdentityUser {
                     UserName = Input.Email,
                     Email = Input.Email,
@@ -101,11 +94,10 @@ namespace MovieRates.Areas.Identity.Pages.Account
                     //DataRegisto = DateTime.Now // data do registo
                 };
                 var result = await _userManager.CreateAsync(user, Input.Password);
-                
-                if (result.Succeeded)
-                {
+
+                if (result.Succeeded) {
                     _logger.LogInformation("User created a new account with password.");
-                   
+
                     //await _userManager.AddToRoleAsync(user, "Utilizador");
 
 
@@ -114,38 +106,46 @@ namespace MovieRates.Areas.Identity.Pages.Account
                     // Vamos proceder à operação de guardar os dados do Criador
                     //*************************************************************
                     // preparar os dados do Criador para serem adicionados à BD
-                     // atribuir ao objeto 'criador' o email fornecido pelo utilizador,
-                                                       // a quando da escreita dos dados na interface
-                                                       // exatamente a mesma tarefa feita na linha 128
+                    // atribuir ao objeto 'criador' o email fornecido pelo utilizador,
+                    // a quando da escreita dos dados na interface
+                    // exatamente a mesma tarefa feita na linha 128
 
-                      // adicionar o ID do utilizador,
-                                                       // para formar uma 'ponte' (foreign key) entre
-                                                       // os dados da autenticação e os dados do 'negócio'
+                    // adicionar o ID do utilizador,
+                    // para formar uma 'ponte' (foreign key) entre
+                    // os dados da autenticação e os dados do 'negócio'
 
 
                     // estamos em condições de guardar os dados na BD
-                    
-                    Input.Utilizador.Email = Input.Email;
-                        Input.Utilizador.UserNameId = user.Id;
-                    
+
+                   
+                    Utilizadores utilizador = new Utilizadores {
+                        Email = user.Email,
+                        UserNameId = user.Id
+                    };
+
+                    if (Input.Email == "gestor@ipt.pt") {
+                        await _userManager.AddToRoleAsync(user, "Gestor");
+                    } else {
+                        await _userManager.AddToRoleAsync(user, "Cliente");
+                    }
+
                     try {
                         //_context.Add(Input.Utilizador); // adicionar o Criador
                         //await _context.SaveChangesAsync(); // 'commit' da adição
-                                                           // Enviar para o utilizador para a página de confirmação da criaçao de Registo
+                        // Enviar para o utilizador para a página de confirmação da criaçao de Registo
                         //return RedirectToPage("RegisterConfirmation");
-                        await _userManager.AddToRoleAsync(user, "Utilizador");
-                        
-                        await _context.AddAsync(Input.Utilizador);
+
+                        await _context.AddAsync(utilizador);
                         await _context.SaveChangesAsync(); // 'commit' da adição
                                                            // Enviar para o utilizador para a página de confirmação da criaçao de Registo
                         return RedirectToPage("RegisterConfirmation");
                     } catch (Exception) {
                         // avisar que houve um erro
-                        
+
                         ModelState.AddModelError("", "Ocorreu um erro na criação de dados");
                         // deverá ser apagada o User q foi previamente criador
                         await _userManager.DeleteAsync(user);
-                        
+
                         // devolver dados à pagina
                         return Page();
                     }
@@ -174,8 +174,7 @@ namespace MovieRates.Areas.Identity.Pages.Account
                         return LocalRedirect(returnUrl);
                     }*/
                 }
-                foreach (var error in result.Errors)
-                {
+                foreach (var error in result.Errors) {
                     ModelState.AddModelError(string.Empty, error.Description);
                 }
             }
