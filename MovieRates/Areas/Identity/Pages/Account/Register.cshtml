@@ -1,16 +1,18 @@
 ﻿@page
 @model RegisterModel
-@{ ViewData["Title"] = "Registar"; }
+@{
+    ViewData["Title"] = "Registar";
+}
 
 <h1>@ViewData["Title"]</h1>
-
 <form asp-route-returnUrl="@Model.ReturnUrl" method="post">
     <div class="row">
         <div class="col-md-4">
-
-            <h4>Criar uma nova conta.</h4>
+            @*<form asp-route-returnUrl="@Model.ReturnUrl" method="post">*@
+            <h4>Create a new account.</h4>
             <hr />
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
             <div class="form-group">
                 <label asp-for="Input.Email"></label>
                 <input asp-for="Input.Email" class="form-control" />
@@ -27,10 +29,40 @@
                 <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
             </div>
             <button type="submit" class="btn btn-primary">Registar</button>
-        </div>
+
+
+        </div>@*
+        <div class="col-md-6 col-md-offset-2">
+           <p><b>recolha dos Dados do Utilizador</b></p>
+           <hr />
+           <div class="form-group">
+               <label asp-for="Input.Utilizador.Nome" class="control-label"></label>
+               <input asp-for="Input.Criador.Nome" class="form-control" />
+               <span asp-validation-for="Input.Criador.Nome" class="text-danger"></span>
+           </div>
+           <div class="form-group">
+               <label asp-for="Input.Criador.NomeComercial" class="control-label"></label>
+               <input asp-for="Input.Criador.NomeComercial" class="form-control" />
+               <span asp-validation-for="Input.Criador.NomeComercial" class="text-danger"></span>
+           </div>
+           <div class="form-group">
+               <label asp-for="Input.Criador.Morada" class="control-label"></label>
+               <input asp-for="Input.Criador.Morada" class="form-control" />
+               <span asp-validation-for="Input.Criador.Morada" class="text-danger"></span>
+           </div>
+           <div class="form-group">
+               <label asp-for="Input.Criador.CodPostal" class="control-label"></label>
+               <input asp-for="Input.Criador.CodPostal" class="form-control" />
+               <span asp-validation-for="Input.Criador.CodPostal" class="text-danger"></span>
+           </div>
+           <div class="form-group">
+               <label asp-for="Input.Criador.Telemovel" class="control-label"></label>
+               <input asp-for="Input.Criador.Telemovel" class="form-control" />
+               <span asp-validation-for="Input.Criador.Telemovel" class="text-danger"></span>
+           </div>
+        </div>*@
     </div>
 </form>
-
-@section Scripts {
-    <partial name="_ValidationScriptsPartial" />
-}
+    @section Scripts {
+        <partial name="_ValidationScriptsPartial" />
+    }

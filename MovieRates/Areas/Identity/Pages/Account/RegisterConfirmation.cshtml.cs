@@ -12,7 +12,7 @@ namespace MovieRates.Areas.Identity.Pages.Account
     [AllowAnonymous]
     public class RegisterConfirmationModel : PageModel
     {
-      /*  private readonly UserManager<IdentityUser> _userManager;
+        private readonly UserManager<IdentityUser> _userManager;
         private readonly IEmailSender _sender;
 
         public RegisterConfirmationModel(UserManager<IdentityUser> userManager, IEmailSender sender)
@@ -56,6 +56,6 @@ namespace MovieRates.Areas.Identity.Pages.Account
             }
 
             return Page();
-        }*/
+        }
     }
 }

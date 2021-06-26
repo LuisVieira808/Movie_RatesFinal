@@ -1,14 +1,22 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using MovieRates.Models;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace MovieRates.Data
 {
-    public class ApplicationDbContext : IdentityDbContext
-    {
+
+   /* public class ApplicationUser : IdentityUser {
+        public DateTime DataRegisto { get; set; }
+
+    }*/
+  
+
+    public class ApplicationDbContext : IdentityDbContext {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -96,6 +104,10 @@ namespace MovieRates.Data
 
         }
 
+       /* internal Task AddToRoleAsync(Utilizadores utilizador) {
+            throw new NotImplementedException();
+        }*/
+
         /// <summary>
         /// Representar a Tabela Filmes da BD
         /// </summary>
@@ -104,7 +116,7 @@ namespace MovieRates.Data
         public DbSet<Categorias> Categorias { get; set; }
 
         public DbSet<FilmeCategorias> FilmeCategorias { get; set; }
-        public DbSet<MovieRates.Models.Utilizadores> Utilizadores { get; set; }
-        public DbSet<MovieRates.Models.Reviews> Reviews { get; set; }
+        public DbSet<Utilizadores> Utilizadores { get; set; }
+        public DbSet<Reviews> Reviews { get; set; }
     }
 }
