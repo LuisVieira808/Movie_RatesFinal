@@ -18,13 +18,17 @@ namespace MovieRates.Controllers
     public class FilmesController : Controller
     {
         /// <summary>
-        /// Este atributo representa a base de dados do projeto
+        /// atributo que representa a base de dados do projeto
         /// </summary>
         private readonly ApplicationDbContext _context;
 
-        private readonly IWebHostEnvironment _caminho;
         /// <summary>
-        /// objeto para gerir os dados dos Utilizadores registados
+        /// atributo que contém os dados da app web no servidor
+        /// </summary>
+        private readonly IWebHostEnvironment _caminho;
+        
+        /// <summary>
+        /// variavel que recolhe os dados da pessoa que se autenticou
         /// </summary>
         private readonly UserManager<IdentityUser> _userManager;
 
@@ -68,15 +72,21 @@ namespace MovieRates.Controllers
 
 
 
-
+        /// <summary>
+        /// Metodo para apresentar os comentarios feitos pelos utilizadores
+        /// </summary>
+        /// <param name="IdFilmes"></param>
+        /// <param name="comentario"></param>
+        /// <param name="rating"></param>
+        /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize]
         public async Task<IActionResult> CreateComentario(int IdFilmes, string comentario, int rating) {
-
+            //recolher dados do utilizador
             var utilizador = _context.Utilizadores.Where(u => u.UserNameId == _userManager.GetUserId(User)).FirstOrDefault();
 
-
+            //variavel que contem os dados da review, do utilizador e sobre qual filme foi feita review
             var comment = new Reviews {
                 FilmesFK = IdFilmes,
                 Comentario = comentario.Replace("\r\n", "<br />"),
@@ -87,7 +97,9 @@ namespace MovieRates.Controllers
             };
 
                 _context.Reviews.Add(comment);
+                //Salva as alterações na Base de Dados
                 await _context.SaveChangesAsync();
+                //redirecionar para a página dos details do filme
                 return RedirectToAction(nameof(Details),new { id = IdFilmes});
         }
 
@@ -105,6 +117,8 @@ namespace MovieRates.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("IdFilmes,Titulo,Data,Capa,Realizador,Elenco,Descricao,Categoria,Link,Duracao,Pontuacao")] Filmes filmes)
         {
+            //avaliar se o modelo de criação é válido, se for, adiciona o filme e a sua informaçao na Base de Dados 
+            //e redireciona para a página do Index
             if (ModelState.IsValid)
             {
                 _context.Add(filmes);

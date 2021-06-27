@@ -32,7 +32,13 @@
         @Html.DisplayFor(model => model.Pontuacao)<br />
 
         <b> Sinopse:</b>
-        @Html.DisplayFor(model => model.Descricao)<br /> <br />
+        @Html.DisplayFor(model => model.Descricao)<br /> <br /><br /> <br />
+
+        @if (User.IsInRole("Gestor")) {
+    <div>
+        <button class="btn btn-primary" onclick="location.href = '@Url.Action("Delete", "Filmes", new { id = Model.IdFilmes })'">Eliminar Filme</button>
+    </div><br />}
+
 
     </div>
 
@@ -51,32 +57,35 @@
 </form>}
     </div>
 
-    <div id="comentarios" style="width:80%">
-        @foreach (var item in Model.ListaDeFilmes) {
-@if (item.Visibilidade == true) {
-<div style="border: 3px solid black; background-color: cyan;
+<div id="comentarios" style="width:80%">
+    @foreach (var item in Model.ListaDeFilmes) {
+        @if (item.Visibilidade == true) {
+    <div style="border: 3px solid black; background-color: cyan;
         padding-top: 2px; padding-right: 3px; padding-bottom: 5px; padding-left: 5px;">
 
-    <span style="font-weight:bold; font-size:medium;">  Utilizador: </span> @item.Utilizador.Email
-    <span style="font-weight:bold; font-size:medium; float:right; margin-right:5px">  Pontuação: @item.Pontuacao</span><br />
+        <span style="font-weight:bold; font-size:medium;">  Utilizador: </span> @item.Utilizador.Email
+        <span style="font-weight:bold; font-size:medium; float:right; margin-right:5px">  Pontuação: @item.Pontuacao</span><br />
 
-    <span style="font-weight:bold; font-size:medium">  Comentario: </span>@Html.Raw(item.Comentario) <br />
+        <span style="font-weight:bold; font-size:medium">  Comentario: </span>@Html.Raw(item.Comentario) <br />
+        <span style="font-weight:bold; font-size:medium">  Data: </span>@item.Data <br />
+
+    </div><br />
+    @if (User.IsInRole("Gestor")) {
+    <div>
+        <button class="btn btn-primary" onclick="location.href = '@Url.Action("Delete", "Reviews", new { id = item.IdReview })'">Eliminar</button>
+    </div><br />
+        }
+    }
+}<br /><br />
 
 </div>
-
-                    <div>
-                        <button class="btn" onclick="location.href = '@Url.Action("Edit","Reviews", new { id = item.IdReview })'">Eleminar</button>
-                    </div>
-                    }
-}
-                <br /><br />
-    </div>
 
 </div>
 @if (User.IsInRole("Gestor")) {
 <div>
     <a asp-action="Edit" asp-route-id="@Model.IdFilmes">Editar</a>
-</div>}
+</div>
+}
 <div>
     <a asp-action="Index">Voltar</a>
 </div>

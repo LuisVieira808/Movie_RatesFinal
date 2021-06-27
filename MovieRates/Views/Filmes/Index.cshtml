@@ -1,15 +1,20 @@
 ﻿@model IEnumerable<MovieRates.Models.Filmes>
 
-@{ 
-    ViewData["Title"] = "Index"; 
-    
-}
+@{ ViewData["Title"] = "Index"; }
 <head>
     <link rel="stylesheet" href="~/css/ImagensFilmes.css" />
 </head>
 <h1>Lista de Filmes</h1>
+
+@if (User.IsInRole("Gestor")) {
+<div>
+    <button class="btn btn-primary" onclick="location.href = 'https://localhost:44348/Filmes/Create'">Adicionar Filme</button>
+</div>
+<br />
+}
+
 @foreach (var item in Model) {
- //   
+
 <div class="Filme">
     <a asp-action="Details" asp-route-id="@item.IdFilmes">
         <img class="FotoFilme" src="~/fotos/@Html.DisplayFor(modelItem => item.Capa)" />
@@ -19,5 +24,6 @@
             </div>
         </div>
     </a>
-</div>
- }
+</div>}
+
+

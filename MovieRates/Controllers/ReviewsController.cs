@@ -12,6 +12,9 @@ namespace MovieRates.Controllers
 {
     public class ReviewsController : Controller
     {
+        /// <summary>
+        /// atributo que representa a Base de Dados do projeto
+        /// </summary>
         private readonly ApplicationDbContext _context;
 
         public ReviewsController(ApplicationDbContext context)
@@ -95,7 +98,7 @@ namespace MovieRates.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("IdReview,Comentario,Pontuacao,Data,UtilizadoresFK,FilmesFK")] Reviews reviews)
+        public async Task<IActionResult> Edit(int id, [Bind("IdReview,Comentario,Pontuacao,Data,UtilizadoresFK,FilmesFK,Visibilidade")] Reviews reviews)
         {
             if (id != reviews.IdReview)
             {
@@ -157,6 +160,7 @@ namespace MovieRates.Controllers
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
+
 
         private bool ReviewsExists(int id)
         {

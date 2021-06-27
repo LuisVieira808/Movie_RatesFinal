@@ -29,7 +29,7 @@ namespace MovieRates.Models
         public int Pontuacao { get; set; }
 
         /// <summary>
-        /// Data que o utilizador meteu a review
+        /// Data que o utilizador submeteu a review
         /// </summary>
         public DateTime Data { get; set; }
 
@@ -40,14 +40,14 @@ namespace MovieRates.Models
 
         //********************************************
         /// <summary>
-        /// FK para o utilizador da review
+        /// FK para o utilizador que fez a review
         /// </summary>
         [ForeignKey(nameof(Utilizador))]
         public int UtilizadoresFK { get; set; }
         public Utilizadores Utilizador { get; set; }
 
         /// <summary>
-        /// FK para o filme da review
+        /// FK para o filme ao qual review foi feita
         /// </summary>
         [ForeignKey(nameof(Filme))]
         public int FilmesFK { get; set; }

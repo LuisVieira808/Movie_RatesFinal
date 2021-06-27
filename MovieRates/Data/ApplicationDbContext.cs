@@ -9,11 +9,6 @@ using System.Threading.Tasks;
 
 namespace MovieRates.Data
 {
-
-   /* public class ApplicationUser : IdentityUser {
-        public DateTime DataRegisto { get; set; }
-
-    }*/
   
 
     public class ApplicationDbContext : IdentityDbContext {
@@ -109,10 +104,6 @@ namespace MovieRates.Data
 
 
         }
-
-       /* internal Task AddToRoleAsync(Utilizadores utilizador) {
-            throw new NotImplementedException();
-        }*/
 
         /// <summary>
         /// Representar a Tabela Filmes da BD
