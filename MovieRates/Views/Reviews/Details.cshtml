@@ -1,11 +1,10 @@
 ﻿@model MovieRates.Models.Reviews
 
-@{
-    ViewData["Title"] = "Details";
-}
+@{ ViewData["Title"] = "Details"; }
 
+
+@if (User.IsInRole("Gestor")) {
 <h1>Details</h1>
-
 <div>
     <h4>Reviews</h4>
     <hr />
@@ -41,8 +40,14 @@
             @Html.DisplayFor(model => model.Filme.Capa)
         </dd>
     </dl>
-</div>
+</div>}
+@if (User.IsInRole("Gestor")) {
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.IdReview">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Edit" asp-route-id="@Model.IdReview">Edit</a>
 </div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div> } else {
+    <h1>Página restrita ao Gestor</h1>
+        }

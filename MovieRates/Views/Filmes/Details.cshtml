@@ -51,28 +51,35 @@
 </form>}
     </div>
 
-    <div style="width:80%">
+    <div id="comentarios" style="width:80%">
         @foreach (var item in Model.ListaDeFilmes) {
+@if (item.Visibilidade == true) {
 <div style="border: 3px solid black; background-color: cyan;
         padding-top: 2px; padding-right: 3px; padding-bottom: 5px; padding-left: 5px;">
 
     <span style="font-weight:bold; font-size:medium;">  Utilizador: </span> @item.Utilizador.Email
     <span style="font-weight:bold; font-size:medium; float:right; margin-right:5px">  Pontuação: @item.Pontuacao</span><br />
-    <span style="font-weight:bold; font-size:medium">  Comentario: </span>@Html.Raw(item.Comentario) <br />
 
-</div><br /><br />}
-    </div>
+    <span style="font-weight:bold; font-size:medium">  Comentario: </span>@Html.Raw(item.Comentario) <br />
 
 </div>
 
+                    <div>
+                        <button class="btn" onclick="location.href = '@Url.Action("Edit","Reviews", new { id = item.IdReview })'">Eleminar</button>
+                    </div>
+                    }
+}
+                <br /><br />
+    </div>
+
+</div>
+@if (User.IsInRole("Gestor")) {
 <div>
-    @if(User.IsInRole("Gestor")) { <a asp-action="Edit" asp-route-id="@Model.IdFilmes">Editar</a>}
-     
+    <a asp-action="Edit" asp-route-id="@Model.IdFilmes">Editar</a>
+</div>}
+<div>
     <a asp-action="Index">Voltar</a>
 </div>
 
 
 
-
-
-}

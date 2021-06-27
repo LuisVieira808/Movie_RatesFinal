@@ -1,11 +1,10 @@
 ﻿@model IEnumerable<MovieRates.Models.Reviews>
 
-@{
-    ViewData["Title"] = "Index";
-}
+@{ ViewData["Title"] = "Index"; }
 
+
+@if (User.IsInRole("Gestor")) {
 <h1>Index</h1>
-
 <p>
     <a asp-action="Create">Create New</a>
 </p>
@@ -31,29 +30,32 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Comentario)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Pontuacao)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Data)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Utilizador.Email)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Filme.Capa)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.IdReview">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.IdReview">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.IdReview">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model) {
+<tr>
+    <td>
+        @Html.DisplayFor(modelItem => item.Comentario)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Pontuacao)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Data)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Utilizador.Email)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Filme.Capa)
+    </td>
+    <td>
+        <a asp-action="Edit" asp-route-id="@item.IdReview">Edit</a> |
+        <a asp-action="Details" asp-route-id="@item.IdReview">Details</a> |
+        <a asp-action="Delete" asp-route-id="@item.IdReview">Delete</a>
+    </td>
+</tr>}
     </tbody>
 </table>
+ }else
+	{
+        <h1>Página restrita ao Gestor</h1>
+	}

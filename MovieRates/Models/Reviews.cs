@@ -33,7 +33,10 @@ namespace MovieRates.Models
         /// </summary>
         public DateTime Data { get; set; }
 
-
+        /// <summary>
+        /// Visibilidade da review
+        /// </summary>
+        public Boolean Visibilidade { get; set; }
 
         //********************************************
         /// <summary>

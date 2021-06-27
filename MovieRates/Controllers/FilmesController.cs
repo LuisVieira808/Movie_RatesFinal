@@ -82,6 +82,7 @@ namespace MovieRates.Controllers
                 Comentario = comentario.Replace("\r\n", "<br />"),
                 Pontuacao = rating,
                 Data = DateTime.Now,
+                Visibilidade = true,
                 Utilizador = utilizador
             };
 
